@@ -7,20 +7,6 @@ pipeline {
     }
 
     stages {
-        stage('Checkout') {
-            steps {
-                script {
-                    // Clone the Git repository's master branch
-                    def gitRepoUrl = 'https://github.com/Sadhiq93/sample.git'
-
-                    checkout([$class: 'GitSCM', 
-                        branches: [[name: '*/main']], 
-                        userRemoteConfigs: [[url: gitRepoUrl]], 
-                        extensions: [[$class: 'CleanBeforeCheckout'], [$class: 'CloneOption', noTags: false, shallow: true, depth: 1]]
-                    ])
-                }
-            }
-        }
 
         stage('Build') {
             steps {
