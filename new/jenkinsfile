@@ -11,10 +11,24 @@ pipeline {
         environment {
             logs = "info"
         }
-        steps {
-             echo "Building version ${version} with log level ${logs}..."
+        stage('Build') {
+        parallel {
+            stage('debian') {
+            steps {
+                echo "build version ${version} for ${STAGE_NAME} logs ${logs} stage "
+            }   
+            }
+            stage('ubuntu') {
+            steps {
+                echo "build version ${version} for ${STAGE_NAME} logs ${logs} stage "
+            }   
+            }
+            }
         }
         }
+
+
+  
         stage('Test') {
         
          agent any
@@ -48,4 +62,9 @@ pipeline {
     }
   }
 }
-   
+     
+
+
+
+		
+
