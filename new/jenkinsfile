@@ -1,48 +1,51 @@
 pipeline {
-    agent any
-
+    agent any 
     environment {
-        // Define environment variables here
-        MY_ENV_VAR = 'Custom Value'
+        version = "1.0"
     }
-
     stages {
-
         stage('Build') {
-            steps {
-                // Build your application here (e.g., compile, package, etc.)
-                sh '''
-                ls
-                echo "In Build Step"
-                '''
-            }
-        }
+        
+         agent any
 
+        environment {
+            logs = "info"
+        }
+        steps {
+             echo "Building version ${version} with log level ${logs}..."
+        }
+        }
         stage('Test') {
-            steps {
-                // Run your tests (e.g., unit tests, integration tests)
-                sh 'echo "In Test Step"'
-            }
-        }
+        
+         agent any
 
+        environment {
+            logs = "info"
+        }
+        steps {
+             echo "Building version ${version} with log level ${logs}..."
+        }
+        }
         stage('Deploy') {
             steps {
-                // Deploy your application to a target environment (e.g., staging, production)
-                sh 'echo "Value of ENV Varaible is "$MY_ENV_VAR""'
-            }
+            echo "Building version ${version} with log level ${target}..."
+        }
+
+            input {
+                message 'Deploy'
+                ok 'Do deployment'
+                submitter 'sid'
+                parameters {
+                    string defaultValue: 'dev', description: 'target deployment', name: 'target'
+                }
+        }
         }
     }
 
-    post {
-        success {
-            // Actions to perform when the pipeline succeeds
-            echo 'Pipeline succeeded!'
-        }
-        failure {
-            // Actions to perform when the pipeline fails
-            echo 'Pipeline failed!'
-        }
+  post {
+    failure {
+      echo "job failed"
     }
+  }
 }
-
-
+   
