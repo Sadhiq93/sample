@@ -1,0 +1,25 @@
+pipeline {
+    agent any 
+    environment {
+        version = "1.0"
+    }
+    stages {
+        stage('Build') {
+        
+         agent any
+
+        environment {
+            logs = "info"
+        }
+        steps {
+             echo "Building release ${} with log level ${logs}..."
+        }
+        }
+    }
+
+  post {
+    failure {
+      echo "job failed"
+    }
+  }
+}
