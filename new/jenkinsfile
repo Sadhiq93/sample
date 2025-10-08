@@ -11,7 +11,6 @@ pipeline {
         environment {
             logs = "info"
         }
-        stage('Build') {
         parallel {
             stage('debian') {
             steps {
@@ -25,10 +24,7 @@ pipeline {
             }
             }
         }
-        }
 
-
-  
         stage('Test') {
         
          agent any
