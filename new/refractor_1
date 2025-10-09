@@ -2,17 +2,19 @@
         agent any 
 
         environment {
-            version: v1
-            release: 1.0
+            version = 'v1'
+            release = '1.0'
         }
 
         stages {
             stage('tools') {
+                steps {
                 sh '''
                     git version
                     mvn -version
                     java -version
                     '''
+            }
             }
             stage('Unit test') {
             steps {
