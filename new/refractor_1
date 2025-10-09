@@ -11,7 +11,7 @@
                 steps {
                 sh '''
                     git version
-                    mvn -version
+                    mvn -v
                     java -version
                     '''
             }
