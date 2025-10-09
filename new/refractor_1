@@ -1,7 +1,7 @@
     pipeline {
         agent any 
    	tools {
-        maven 'Maven_3.9.11' // Name as defined above
+        maven 'mvn_3.9.11' // Name as defined above
     	}
         environment {
             version = 'v1'
