@@ -1,0 +1,35 @@
+    pipeline {
+        agent any 
+
+        environment {
+            version: v1
+            release: 1.0
+        }
+
+        stages {
+            stage('tools') {
+                sh '''
+                    git version
+                    mvn -version
+                    java -version
+                    '''
+            }
+            stage('Unit test') {
+            steps {
+                dir('./java-app/cicd-flow') {
+                sh '''
+                echo "testing code"
+                mvn test
+                '''
+                }
+            }
+            }
+            stage('Build') {
+                steps {
+            echo "Building version: ${version} with suffix: ${release}"
+            echo 'Mention your Application Build Code here!!!'
+            sh 'mvn -f java-app/cicd-flow/pom.xml clean package'
+                }
+            }
+        }
+    }
