@@ -4,7 +4,6 @@
         environment {
             version = 'v1'
             release = '1.0'
-            'PATH+MAVEN' = '/opt/maven/bin'
         }
 
         stages {
