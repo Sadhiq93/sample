@@ -1,41 +1,38 @@
-pipeline {
-    agent any
+    pipeline {
+        agent any 
 
-    environment {
-        VERSION = '0.1.0'
-        RELEASE_VERSION = 'R.2'
-        PATH+MAVEN = "/opt/maven/bin"
-    }
-
-    stages {
-        stage('Audit tools') {
-            steps {
-                sh '''
-                    git version
-                    java -version
-                    mvn -version
-                '''
-            }
+        environment {
+            version = 'v1'
+            release = '1.0'
+            'PATH+MAVEN' = '/opt/maven/bin'
         }
 
-        stage('Unit Test') {
-            steps {
-                dir('./java-tomcat-sample') {
-                    sh '''
-                        echo "Executing Unit Tests..."
-                        mvn test
+        stages {
+            stage('tools') {
+                steps {
+                sh '''
+                    git version
+                    mvn -version
+                    java -version
                     '''
+            }
+            }
+            stage('Unit test') {
+            steps {
+                dir('./java-app/cicd-flow') {
+                sh '''
+                echo "testing code"
+                mvn test
+                '''
+                }
+            }
+            }
+            stage('Build') {
+                steps {
+            echo "Building version: ${version} with suffix: ${release}"
+            echo 'Mention your Application Build Code here!!!'
+            sh 'mvn -f java-app/cicd-flow/pom.xml clean package'
                 }
             }
         }
-
-        stage('Build') {
-            steps {
-                echo "Building version: ${VERSION} with suffix: ${RELEASE_VERSION}"
-                echo 'Mention your Application Build Code here!!!'
-                sh 'mvn -f java-tomcat-sample/pom.xml clean package'
-            }
-        }
     }
-}
-
